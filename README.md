@@ -1,3 +1,17 @@
+## Credentials
+
+- https://moralis.io/
+- Munna Wex
+- nohoWex350@tohup.com
+- NohoWex350@tohup.com1
+
+## Learning
+
+- https://docs.moralis.io/authentication-api/how-to-sign-in-with-metamask
+- https://github.com/MoralisWeb3/demo-apps/tree/main/nextjs_moralis_auth
+
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
