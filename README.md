@@ -10,6 +10,9 @@
 - https://docs.moralis.io/authentication-api/how-to-sign-in-with-metamask
 - https://github.com/MoralisWeb3/demo-apps/tree/main/nextjs_moralis_auth
 
+## Pre - Requirements
+
+- NodeJS v16.19.0
 
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
