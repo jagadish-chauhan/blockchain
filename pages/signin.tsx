@@ -19,14 +19,12 @@ function SignIn() {
 
         const { account, chain } = await connectAsync({ connector: new MetaMaskConnector() });
 
-        const { message } = await requestChallengeAsync({ address: account, chainId: chain.id }) as any;
+        const { message } = await requestChallengeAsync({ address: account, chainId: chain.id });
 
         const signature = await signMessageAsync({ message });
 
         // redirect user after success authentication to '/user' page
-        const { url } = await signIn('credentials', { message, signature, redirect: false, callbackUrl: '/user' }) as any;
-
-        console.log("sign in url", { url });
+        const { url } = await signIn('moralis-auth', { message, signature, redirect: false, callbackUrl: '/user' });
         /**
          * instead of using signIn(..., redirect: "/user")
          * we get the url from callback and push it to the router to avoid page refreshing
