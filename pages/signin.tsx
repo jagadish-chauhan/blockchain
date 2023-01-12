@@ -3,6 +3,7 @@ import { signIn } from 'next-auth/react';
 import { useAccount, useConnect, useSignMessage, useDisconnect } from 'wagmi';
 import { useRouter } from 'next/router';
 import { useAuthRequestChallengeEvm } from '@moralisweb3/next';
+import { getSession, signOut } from 'next-auth/react';
 
 function SignIn() {
     const { connectAsync } = useConnect();
@@ -38,6 +39,23 @@ function SignIn() {
             <button onClick={handleAuth}>Authenticate via Metamask</button>
         </div>
     );
+}
+
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+
+    if (session) {
+        return {
+            redirect: {
+                destination: '/user',
+                permanent: false,
+            },
+        };
+    }
+
+    return {
+        props: {},
+    };
 }
 
 export default SignIn;
