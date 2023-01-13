@@ -1,7 +1,21 @@
-import mongoose from "mongoose";
+import { model, Schema, Model, Document, models } from 'mongoose';
 
-const userSchema = new mongoose.Schema({
+interface IUser extends Document {
+    profileId: string;
+    address?: string;
+    chainId?: string;
+    domain?: string;
+    metamask_id?: string;
+    nonce?: string;
+    uri?: string;
+    version?: string;
+    about_me?: string;
+    [x: string]: any;
+}
+
+const userSchema = new Schema<IUser>({
     profileId: {
+        required: true,
         type: String,
     },
     address: {
@@ -31,13 +45,13 @@ const userSchema = new mongoose.Schema({
     },
     posts: [{
         ref: 'posts',
-        type: mongoose.Schema.Types.ObjectId
+        type: Schema.Types.ObjectId
     }],
 }, {
     timestamps: true,
     // strict: false
 });
 
-let Users = mongoose.models.users || mongoose.model("users", userSchema);
+let Users: Model<IUser> = models.users || model("users", userSchema);
 
 export default Users;

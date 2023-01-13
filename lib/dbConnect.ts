@@ -24,7 +24,7 @@ async function dbConnect() {
         return cached.conn
     }
 
-    if (!cached.promise) {
+    if (!cached?.promise) {
         const opts = {
             useNewUrlParser: true,
             useUnifiedTopology: true,
