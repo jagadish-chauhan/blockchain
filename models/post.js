@@ -6,7 +6,7 @@ const postSchema = new mongoose.Schema({
     }
 }, {
     timestamps: true,
-    strict: false
+    // strict: false
 });
 
 let Posts = mongoose.models.posts || mongoose.model("posts", postSchema);
