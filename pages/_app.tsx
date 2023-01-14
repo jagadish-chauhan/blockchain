@@ -18,7 +18,10 @@ function MyApp({ Component, pageProps }) {
     <WagmiConfig client={client}>
       <SessionProvider session={pageProps.session} refetchInterval={0}>
         <Header {...pageProps} />
-        <Component {...pageProps} />
+        <main className='mt-16'>
+          <Component {...pageProps} />
+        </main>
+
       </SessionProvider>
     </WagmiConfig>
   );

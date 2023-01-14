@@ -12,7 +12,8 @@ const publicNavigation = [
 
 const protectedNavigation = [
   { name: 'Posts', href: '/', current: true },
-  { name: 'New Posts', href: '/post/new', current: false },
+  { name: 'My Posts', href: '/post/list', current: false },
+  { name: 'New Post', href: '/post/new', current: false },
   { name: 'Profile', href: '/profile', current: false }
 ]
 
@@ -39,7 +40,7 @@ function Header({ isLoggedIn, user }: any) {
       <div className="container flex flex-wrap items-center justify-between mx-auto">
         <a href="https://flowbite.com/" className="flex items-center">
           <img src="https://flowbite.com/docs/images/logo.svg" className="h-6 mr-3 sm:h-9" alt="Flowbite Logo" />
-          <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span>
+          <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white"> Jagadish </span>
         </a>
         <div className="flex md:order-2">
           {isLoggedIn ? <Logout /> : <Logouts />}
