@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import Link from 'next/link';
 
 const publicNavigation = [
   { name: 'Posts', href: '/', current: true },
@@ -17,11 +18,13 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-function Header({ isLoggedIn = false, children }: any) {
+function Header({ isLoggedIn, user }: any) {
 
   const [navigation, setNavigation] = useState([]);
+  console.log('Header', { isLoggedIn, user });
 
   React.useEffect(() => {
+    console.log('Header', { isLoggedIn, user });
     let currNavigation = publicNavigation;
     if (isLoggedIn) {
       currNavigation = protectedNavigation;
@@ -62,7 +65,7 @@ function Header({ isLoggedIn = false, children }: any) {
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
                         href={item.href}
                         className={classNames(
@@ -72,7 +75,7 @@ function Header({ isLoggedIn = false, children }: any) {
                         aria-current={item.current ? 'page' : undefined}
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -113,32 +116,32 @@ function Header({ isLoggedIn = false, children }: any) {
                           <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                             <Menu.Item>
                               {({ active }) => (
-                                <a
+                                <Link
                                   href="#"
                                   className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                                 >
                                   Your Profile
-                                </a>
+                                </Link>
                               )}
                             </Menu.Item>
                             <Menu.Item>
                               {({ active }) => (
-                                <a
+                                <Link
                                   href="#"
                                   className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                                 >
                                   Settings
-                                </a>
+                                </Link>
                               )}
                             </Menu.Item>
                             <Menu.Item>
                               {({ active }) => (
-                                <a
+                                <Link
                                   href="#"
                                   className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                                 >
                                   Sign out
-                                </a>
+                                </Link>
                               )}
                             </Menu.Item>
                           </Menu.Items>
@@ -148,10 +151,7 @@ function Header({ isLoggedIn = false, children }: any) {
                   ) : (
                     <button type="button" className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"> Login </button>
                   )
-
                 }
-
-
               </div>
             </div>
           </div>
