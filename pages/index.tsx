@@ -13,7 +13,7 @@ function HomePage(props: any) {
   console.log("HomePage", { props, nativeBalance });
 
   React.useEffect(() => {
-  }, [props.user]);
+  }, []);
 
   return (
     <React.Fragment>

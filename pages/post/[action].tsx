@@ -8,6 +8,7 @@ import Post from "../../models/post";
 import User from "../../models/user";
 import { toast } from 'react-toastify';
 import { GetServerSidePropsContext } from "next";
+import customSocket from "../../socket/client";
 
 interface IPost {
   title: string;
