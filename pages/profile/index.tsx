@@ -18,7 +18,7 @@ interface TProfile {
 
 function Profile({ user }: any) {
 
-  const { back } = useRouter();
+  const { back, push } = useRouter();
 
   const { register, setValue, handleSubmit, control } = useForm<TProfile>();
   const { errors } = useFormState({ control });
@@ -28,10 +28,8 @@ function Profile({ user }: any) {
   }
 
   function onSubmit(data: any, e: any) {
-    console.log(data, e);
     toast('User has been updated.');
-    return axiosInstance.patch(`/api/users/${user.profileId}`, data);
-
+    return axiosInstance.patch(`/api/users/${user.profileId}`, data).then(() => push("/"));
   };
   const onError = (errors: any, e: any) => {
     console.log(errors, e)
@@ -45,7 +43,6 @@ function Profile({ user }: any) {
     }
   }, [user]);
 
-  console.log("Profile Update ", { errors, user });
   return (
     <React.Fragment>
       <div className="flex flex-col items-center min-h-screen pt-9 bg-gray-100">

@@ -27,7 +27,6 @@ function NewPost({ user, post }: any) {
   }
 
   const onSubmit = (data: IPost, e: any) => {
-    console.log("NewPost submit", data, e);
     if (action === 'new') {
       data.user = user._id;
       axiosInstance.post(`/api/post`, data).then(() => {
@@ -137,8 +136,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
     const postPromise = action === 'new' ? {} : Post.findOne({ _id: action }).lean();
     return Promise.all([userPromise, postPromise])
       .then(([user, post]) => {
-        console.log('session user resp ', { user, post });
-
         return {
           props: {
             isLoggedIn: true,

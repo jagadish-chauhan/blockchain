@@ -1,13 +1,12 @@
-import React, { Fragment, useState } from 'react'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import React, { useState } from 'react'
 import Link from 'next/link';
 import Logouts from './Signout';
 import Logout from './Logged';
+import { useRouter } from 'next/router';
 
 const publicNavigation = [
-  { name: 'Posts', href: '/posts/list', current: true },
-  { name: 'Users', href: '/users/list', current: false }
+  // { name: 'Posts', href: '/posts/list', current: true },
+  // { name: 'Users', href: '/users/list', current: false }
 ]
 
 const protectedNavigation = [
@@ -22,18 +21,31 @@ function classNames(...classes) {
 }
 
 function Header({ isLoggedIn, user }: any) {
-
+  const router = useRouter();
   const [navigation, setNavigation] = useState([]);
-  console.log('Header', { isLoggedIn, user });
-
   React.useEffect(() => {
-    console.log('Header', { isLoggedIn, user });
     let currNavigation = publicNavigation;
     if (isLoggedIn) {
-      currNavigation = protectedNavigation;
+      const { pathname, query: { action } } = router;
+      currNavigation = protectedNavigation.map((nv: any) => {
+        nv.current = false;
+        if (pathname.includes('profile') && nv.name === "Profile") {
+          return { ...nv, current: true };
+        } else if (pathname.includes('post/') && action === 'new' && nv.name === "New Post") {
+          return { ...nv, current: true };
+        } else if (pathname.includes('posts/') && action === 'list' && nv.name === "Posts") {
+          return { ...nv, current: true };
+        } else if (pathname.includes('posts/') && action === 'self' && nv.name === "My Posts") {
+          return { ...nv, current: true };
+        } else {
+          return nv;
+        }
+      });
     }
     setNavigation(() => currNavigation);
-  }, [isLoggedIn]);
+  }, [router, isLoggedIn])
+
+  let username = user.first_name + " " + user.last_name;
 
   return (
     <nav className="bg-white px-2 sm:px-4 py-2.5 dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
@@ -43,7 +55,7 @@ function Header({ isLoggedIn, user }: any) {
           <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white"> Jagadish </span>
         </a>
         <div className="flex md:order-2">
-          {isLoggedIn ? <Logout /> : <Logouts />}
+          {isLoggedIn ? <Logout username={username} /> : <Logouts />}
           <button data-collapse-toggle="navbar-sticky" type="button" className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-sticky" aria-expanded="false">
             <span className="sr-only">Open main menu</span>
             <svg className="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd"></path></svg>

@@ -23,7 +23,6 @@ function Posts({ posts: initialPosts = [], user = {}, loginUserId }: PostsProps)
 
     customSocket().then((socket) => {
       socket.on('post-watch', ({ data: [data_1] }) => {
-        console.log('post-watch', { data_1 });
         setProps(prev => {
           const index = prev.findIndex((post) => post._id === data_1._id);
           if (index === -1) {
@@ -37,17 +36,14 @@ function Posts({ posts: initialPosts = [], user = {}, loginUserId }: PostsProps)
 
     // Specify how to clean up after this effect:
     return function cleanup() {
-      console.log('socket cleanup');
       customSocket().then((socket) => {
         socket.on('disconnect', () => {
-          console.log('socket disconnect');
+          // console.log('socket disconnect');
         })
       })
     };
 
   }, [action]);
-
-  console.log("Posts entry ", posts, user);
 
   return (
     <React.Fragment>
@@ -87,7 +83,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     }
 
     const { user } = session as any;
-    console.log('Posts session user ', { action, user, profileId: user.profileId });
 
     if (action === 'self') {
       let userPromise_1 = await UserColl.findOne({ profileId: user.profileId }).lean();

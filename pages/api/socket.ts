@@ -14,12 +14,6 @@ const ioHandler = (req, res) => {
           socket.broadcast.emit('post-watch', { data: JSON.parse(JSON.stringify(post)) });
         })
       })
-      // socket.on('post-new', (data) => {
-      //   socket.broadcast.emit('post-new', data);
-      // })
-      // socket.on('post-change', (data) => {
-      //   socket.broadcast.emit('post-change', data);
-      // })
     })
 
     res.socket.server.io = io

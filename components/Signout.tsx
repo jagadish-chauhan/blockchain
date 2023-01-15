@@ -31,7 +31,6 @@ function NoLogin() {
      * we get the url from callback and push it to the router to avoid page refreshing
      */
 
-    console.log("all IDs", { requestChallengeResult, connectResult, signature })
     const initialUser = {
       // connectResult
       "address": connectResult.account,

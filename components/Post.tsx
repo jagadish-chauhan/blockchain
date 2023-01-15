@@ -6,8 +6,6 @@ function Post({ title, description, createdAt, user = {}, loginUserId, _id, ...r
 
   const { push } = useRouter();
 
-  console.log('post --> ', { title, description, createdAt, user, ...rest });
-
   function onUpdatePost() {
     return push(`/post/${_id}`);
   }

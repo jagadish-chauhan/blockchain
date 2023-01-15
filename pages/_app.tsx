@@ -15,7 +15,6 @@ const client = createClient({
 });
 
 function MyApp({ Component, pageProps }) {
-  console.log('Component, pageProps, isLoggedIn', { Component, pageProps });
   return (
     <WagmiConfig client={client}>
       <SessionProvider session={pageProps.session} refetchInterval={0}>

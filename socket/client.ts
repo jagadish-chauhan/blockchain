@@ -9,7 +9,6 @@ const socketInitialization = async () => await axiosInstance
     if (!socket) {
       socket = io();
       socket.on('connect', () => {
-        console.log('socket connect');
         socket.emit('hello');
       })
     }

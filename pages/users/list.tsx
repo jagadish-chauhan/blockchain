@@ -13,7 +13,6 @@ function UsersList() {
 // https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props
 export async function getServerSideProps(context: GetSessionParams) {
   const session = await getSession(context);
-  console.log('Header ', { session });
   if (!session) {
     return {
       props: {}, // will be passed to the page component as props
