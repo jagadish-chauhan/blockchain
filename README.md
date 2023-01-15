@@ -1,3 +1,9 @@
+## Tailwind Component
+
+- https://tailwind-elements.com/docs/standard/components/buttons/
+- https://flowbite.com/docs/components/alerts/
+- https://larainfo.com/blogs/tailwind-css-simple-post-crud-ui-example
+
 ## Credentials
 
 - https://moralis.io/
