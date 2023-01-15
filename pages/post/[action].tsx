@@ -16,11 +16,14 @@ interface IPost {
 }
 
 function NewPost({ user, post }: any) {
-  const { query: { action }, push } = useRouter();
+  const { query: { action }, push, back } = useRouter();
 
   const { register, handleSubmit, setValue, control } = useForm<IPost>();
   const { errors } = useFormState({ control });
 
+  function onCancel() {
+    return back();
+  }
 
   const onSubmit = (data: IPost, e: any) => {
     console.log("NewPost submit", data, e);
@@ -55,7 +58,7 @@ function NewPost({ user, post }: any) {
         <form onSubmit={handleSubmit(onSubmit, onError)}>
           <div className="overflow-hidden shadow sm:rounded-md w-[80vw] max-w-screen-sm">
             <h1 className="text-2xl text-left tracking-wide leading-10 mx-2 font-semibold">
-              New Post
+              {action !== 'new' ? "Update" : "New"} Post
             </h1>
             <div className="bg-white px-4 py-5 sm:p-6">
               <div className="grid grid-cols-12 gap-6">
@@ -100,6 +103,7 @@ function NewPost({ user, post }: any) {
                 Save
               </button>
               <button
+                onClick={onCancel}
                 type="button"
                 className="mx-1 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-sm px-4 py-2 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800"
               >
