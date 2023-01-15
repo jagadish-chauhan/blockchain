@@ -46,7 +46,7 @@ function NoLogin() {
       "last_name": "User",
       "email_address": "",
       "domain": "amazing.dapp",
-      "uri": "http://localhost:3000",
+      "uri": process.env.NEXTAUTH_URL,
       "version": "1",
       "nonce": "PhHivceshQB8gekJi",
     };
