@@ -1,18 +1,20 @@
-import dbConnect from '../../lib/dbConnect';
-import User from '../../models/user';
+import { NextApiRequest, NextApiResponse } from 'next';
+import dbConnect from '../../../lib/dbConnect';
+import User from '../../../models/user';
 
-export default async function handler(req, res) {
-  const { method } = req
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const { method } = req;
 
+  console.log('users handler : ', { method, body: req.body });
   await dbConnect();
-
-  console.log('users handler : ', { method, body: req.body })
 
   switch (method) {
     case 'GET':
       try {
         const users = await User.find({});
-        res.status(200).json({ success: true, data: users })
+        // res.status = 200;
+        // res.json({ success: true, data: users });
+        res.status(200).json({ success: true })
       } catch (error) {
         res.status(400).json({ success: false })
       }
@@ -20,9 +22,9 @@ export default async function handler(req, res) {
     case 'PATCH': {
       try {
         // const user = await User.updateOne({ _id:  })
-        // res.status(201).json({ success: true, data: user })
+        res.status(201).json({ success: true })
       } catch (error) {
-        // res.status(400).json({ success: false })
+        res.status(400).json({ success: false })
       }
       break
     }

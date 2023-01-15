@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 import { useForm, useFormState } from 'react-hook-form';
 
@@ -11,7 +12,9 @@ function NewPost() {
   const { register, setValue, handleSubmit, control } = useForm<IPost>();
   const { errors, dirtyFields } = useFormState({ control });
 
-  const onSubmit = (data: any, e: any) => console.log(data, e);
+  const onSubmit = (data: any, e: any) => {
+    console.log("NewPost submit", data, e);
+  };
   const onError = (errors: any, e: any) => {
     console.log(errors, e)
   };

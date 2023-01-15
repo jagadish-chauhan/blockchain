@@ -1,7 +1,15 @@
 import mongoose from "mongoose";
 
+export interface IPost extends Document {
+  title: string;
+  description: string;
+}
+
 const postSchema = new mongoose.Schema({
-  name: {
+  title: {
+    type: String,
+  },
+  description: {
     type: String,
   }
 }, {

@@ -12,7 +12,7 @@ function Posts({ posts = [] }: PostsProps) {
     <React.Fragment>
       <div className="flex flex-col items-center py-20 bg-gray-100  sm:justify-center sm:pt-0">
         <div className='mt-4' ></div>
-        {posts.map(post => <Post {...post} />)}
+        {posts.map((post) => <Post key={post.title}  {...post} />)}
       </div>
     </React.Fragment>
   )

@@ -21,6 +21,7 @@ if (!cached) {
 
 async function dbConnect() {
   if (cached.conn) {
+    console.log('MondoDB Connected');
     return cached.conn
   }
 
@@ -35,6 +36,7 @@ async function dbConnect() {
     }
 
     cached.promise = mongoose.connect(MONGODB_URI, opts).then(mongoose => {
+      console.log('MondoDB Initialize');
       return mongoose
     })
   }

@@ -1,15 +1,17 @@
 import { model, Schema, Model, Document, models } from 'mongoose';
+import { IPost } from './post';
 
-interface IUser extends Document {
+export interface IUser extends Document {
   profileId: string;
   address?: string;
   chainId?: string;
   domain?: string;
-  metamask_id?: string;
+  metamaskId?: string;
   nonce?: string;
   uri?: string;
   version?: string;
-  about_me?: string;
+  aboutMe?: string;
+  posts?: IPost;
   [x: string]: any;
 }
 
