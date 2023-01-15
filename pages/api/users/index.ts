@@ -21,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       break
     case 'PATCH': {
       try {
-        // const user = await User.updateOne({ _id:  })
+        const user = await User.updateOne({ profileId: null })
         res.status(201).json({ success: true })
       } catch (error) {
         res.status(400).json({ success: false })

@@ -21,9 +21,7 @@ function NoLogin() {
     }
 
     const connectResult = await connectAsync({ connector: new MetaMaskConnector() });
-
     const requestChallengeResult = await requestChallengeAsync({ address: connectResult.account, chainId: connectResult.chain.id });
-
     const signature = await signMessageAsync({ message: requestChallengeResult.message });
 
     // redirect user after success authentication to '/user' page
@@ -33,23 +31,27 @@ function NoLogin() {
      * we get the url from callback and push it to the router to avoid page refreshing
      */
 
+    console.log("all IDs", { requestChallengeResult, connectResult, signature })
     const initialUser = {
-      "profileId": requestChallengeResult.id,
-      "chainId": connectResult.chain.id,
-      "metamaskId": requestChallengeResult.id,
+      // connectResult
       "address": connectResult.account,
-      "message": requestChallengeResult.message,
+      "chainId": connectResult.chain.id,
+      // signature
       "signature": signature,
+      // requestChallengeResult
+      "metamaskId": requestChallengeResult.id,
+      "profileId": requestChallengeResult.profileId, // unique
+      "message": requestChallengeResult.message,
+      // static data
       "domain": "amazing.dapp",
       "uri": "http://localhost:3000",
       "version": "1",
       "nonce": "PhHivceshQB8gekJi",
     };
 
-    await axiosInstance.post('/api/users', initialUser)
+    await axiosInstance.patch(`/api/users/${initialUser.profileId}`, initialUser)
     push(url);
   };
-
 
   return (
     <React.Fragment>
