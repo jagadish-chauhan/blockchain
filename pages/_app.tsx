@@ -1,5 +1,7 @@
+import 'react-toastify/dist/ReactToastify.css';
 import '../styles/globals.css';
 import { createClient, configureChains, defaultChains, WagmiConfig } from 'wagmi';
+import { ToastContainer, toast } from 'react-toastify';
 import { publicProvider } from 'wagmi/providers/public';
 import { SessionProvider } from 'next-auth/react';
 import Header from '../components/Header';
@@ -21,7 +23,7 @@ function MyApp({ Component, pageProps }) {
         <main className='mt-16'>
           <Component {...pageProps} />
         </main>
-
+        <ToastContainer />
       </SessionProvider>
     </WagmiConfig>
   );

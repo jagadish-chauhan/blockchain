@@ -25,7 +25,7 @@ function NoLogin() {
     const signature = await signMessageAsync({ message: requestChallengeResult.message });
 
     // redirect user after success authentication to '/user' page
-    const { url } = await signIn('moralis-auth', { message: requestChallengeResult.message, signature, redirect: false, callbackUrl: '/' });
+    const { url } = await signIn('moralis-auth', { message: requestChallengeResult.message, signature, redirect: false, callbackUrl: '/posts/self' });
     /**
      * instead of using signIn(..., redirect: "/user")
      * we get the url from callback and push it to the router to avoid page refreshing
@@ -43,6 +43,9 @@ function NoLogin() {
       "profileId": requestChallengeResult.profileId, // unique
       "message": requestChallengeResult.message,
       // static data
+      "first_name": "Anonymouse",
+      "last_name": "User",
+      "email_address": "",
       "domain": "amazing.dapp",
       "uri": "http://localhost:3000",
       "version": "1",

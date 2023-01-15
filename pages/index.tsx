@@ -29,18 +29,20 @@ function HomePage(props: any) {
 // https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props
 export async function getServerSideProps(context: GetSessionParams) {
   const session = await getSession(context);
-  console.log('Header ', { session });
   if (!session) {
     return {
-      props: {}, // will be passed to the page component as props
-    }
+      redirect: {
+        destination: '/posts/list',
+        permanent: false,
+      },
+    };
   }
   return {
-    props: {
-      isLoggedIn: true,
-      user: session.user,
-    }, // will be passed to the page component as props
-  }
+    redirect: {
+      destination: '/posts/self',
+      permanent: false,
+    },
+  };
 }
 
 export default HomePage;

@@ -6,13 +6,13 @@ import Logouts from './Signout';
 import Logout from './Logged';
 
 const publicNavigation = [
-  { name: 'Posts', href: '/', current: true },
+  { name: 'Posts', href: '/posts/list', current: true },
   { name: 'Users', href: '/users/list', current: false }
 ]
 
 const protectedNavigation = [
-  { name: 'Posts', href: '/', current: true },
-  { name: 'My Posts', href: '/post/list', current: false },
+  { name: 'Posts', href: '/posts/list', current: true },
+  { name: 'My Posts', href: '/posts/self', current: false },
   { name: 'New Post', href: '/post/new', current: false },
   { name: 'Profile', href: '/profile', current: false }
 ]

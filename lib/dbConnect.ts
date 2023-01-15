@@ -37,6 +37,8 @@ async function dbConnect() {
 
     cached.promise = mongoose.connect(MONGODB_URI, opts).then(mongoose => {
       console.log('MondoDB Initialize');
+      mongoose.SchemaTypes.ObjectId.get(v => v.toString());
+      // mongoose.SchemaTypes.ObjectId.set(v => v.toString());
       return mongoose
     })
   }

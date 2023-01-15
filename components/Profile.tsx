@@ -34,12 +34,12 @@ function Profile() {
                   </label>
                   <input
                     type="text"
-                    name="first-name"
-                    id="first-name"
+                    name="first_name"
+                    id="first_name"
                     disabled
                     readOnly
                     value={"0xd1a157da050db3c09ae9afd5c5e9dd3713b04179ebd5232e3d11d178a230d350"}
-                    autoComplete="given-name"
+                    autoComplete="first_name"
                     className="mt-1 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   />
                 </div>
@@ -63,39 +63,39 @@ function Profile() {
 
 
                 <div className="col-span-12 sm:col-span-6">
-                  <label htmlFor="first-name" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="first_name" className="block text-sm font-medium text-gray-700">
                     First name
                   </label>
                   <input
                     type="text"
-                    name="first-name"
-                    id="first-name"
-                    autoComplete="given-name"
+                    name="first_name"
+                    id="first_name"
+                    autoComplete="first_name"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
 
                 <div className="col-span-12 sm:col-span-6">
-                  <label htmlFor="last-name" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="last_name" className="block text-sm font-medium text-gray-700">
                     Last name
                   </label>
                   <input
                     type="text"
-                    name="last-name"
-                    id="last-name"
-                    autoComplete="family-name"
+                    name="last_name"
+                    id="last_name"
+                    autoComplete="last_name"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
 
                 <div className="col-span-6 sm:col-span-8">
-                  <label htmlFor="email-address" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="email_address" className="block text-sm font-medium text-gray-700">
                     Email address
                   </label>
                   <input
                     type="text"
-                    name="email-address"
-                    id="email-address"
+                    name="email_address"
+                    id="email_address"
                     autoComplete="email"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
