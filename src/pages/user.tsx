@@ -1,6 +1,7 @@
+import { GetServerSidePropsContext } from 'next';
 import { getSession, signOut } from 'next-auth/react';
 
-function User({ user }) {
+function User({ user }: any) {
   return (
     <div>
       <h4>User session:</h4>
@@ -10,7 +11,7 @@ function User({ user }) {
   );
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await getSession(context);
 
   if (!session) {

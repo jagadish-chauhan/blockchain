@@ -1,11 +1,15 @@
 import 'react-toastify/dist/ReactToastify.css';
-import '../styles/globals.css';
-import { createClient, configureChains, defaultChains, WagmiConfig } from 'wagmi';
+import '@/styles/globals.css'
+import { createClient, configureChains, WagmiConfig } from 'wagmi';
 import { ToastContainer, toast } from 'react-toastify';
 import { publicProvider } from 'wagmi/providers/public';
+import type { AppProps } from 'next/app'
+
 import { SessionProvider } from 'next-auth/react';
 import Header from '../components/Header';
+import * as chains from 'wagmi/chains';
 
+const defaultChains = Object.values(chains);
 const { provider, webSocketProvider } = configureChains(defaultChains, [publicProvider()]);
 
 const client = createClient({
@@ -14,7 +18,7 @@ const client = createClient({
   autoConnect: true,
 });
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: AppProps) {
   return (
     <WagmiConfig client={client}>
       <SessionProvider session={pageProps.session} refetchInterval={0}>

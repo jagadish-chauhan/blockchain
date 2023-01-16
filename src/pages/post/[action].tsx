@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm, useFormState } from 'react-hook-form';
 import { useRouter } from 'next/router'
-import axiosInstance from "../../lib/axiosInstance";
+import axiosInstance from "../../utils/axiosInstance";
 import { getSession } from 'next-auth/react';
 import dbConnect from "../../lib/dbConnect";
 import Post from "../../models/post";

@@ -6,7 +6,7 @@ import Post from "../../models/post";
 import User from "../../models/user";
 import { toast } from 'react-toastify';
 import { GetServerSidePropsContext } from "next";
-import axiosInstance from "../../lib/axiosInstance";
+import axiosInstance from "../../utils/axiosInstance";
 import { useRouter } from "next/router";
 
 interface TProfile {

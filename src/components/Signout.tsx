@@ -4,7 +4,7 @@ import { signIn } from 'next-auth/react';
 import { useAccount, useConnect, useSignMessage, useDisconnect } from 'wagmi';
 import { useRouter } from 'next/router';
 import { useAuthRequestChallengeEvm } from '@moralisweb3/next';
-import axiosInstance from "../lib/axiosInstance";
+import axiosInstance from "../utils/axiosInstance";
 
 function NoLogin() {
 
