@@ -1,7 +1,9 @@
+import { NextApiResponseWithSocket } from '@/types/type';
+import { NextApiRequest } from 'next';
 import { Server } from 'socket.io'
 import Post from '../../models/post';
 
-const ioHandler = (req, res) => {
+const ioHandler = (_: NextApiRequest, res: NextApiResponseWithSocket) => {
   if (!res.socket.server.io) {
     console.log('*First use, starting socket.io');
 
@@ -14,6 +16,7 @@ const ioHandler = (req, res) => {
           socket.broadcast.emit('post-watch', { data: JSON.parse(JSON.stringify(post)) });
         })
       })
+      res.clientSocket = socket;
     })
 
     res.socket.server.io = io

@@ -1,10 +1,16 @@
 import React from "react";
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
-import { signIn } from 'next-auth/react';
+import { signIn, SignInResponse } from 'next-auth/react';
 import { useAccount, useConnect, useSignMessage, useDisconnect } from 'wagmi';
 import { useRouter } from 'next/router';
 import { useAuthRequestChallengeEvm } from '@moralisweb3/next';
 import axiosInstance from "../utils/axiosInstance";
+
+interface RequestChallengeAsyncResult {
+  id: string;
+  message: string;
+  profileId: string;
+}
 
 function NoLogin() {
 
@@ -20,39 +26,49 @@ function NoLogin() {
       await disconnectAsync();
     }
 
-    const connectResult = await connectAsync({ connector: new MetaMaskConnector() });
-    const requestChallengeResult = await requestChallengeAsync({ address: connectResult.account, chainId: connectResult.chain.id });
-    const signature = await signMessageAsync({ message: requestChallengeResult.message });
+    try {
 
-    // redirect user after success authentication to '/user' page
-    const { url } = await signIn('moralis-auth', { message: requestChallengeResult.message, signature, redirect: false, callbackUrl: '/posts/self' });
-    /**
-     * instead of using signIn(..., redirect: "/user")
-     * we get the url from callback and push it to the router to avoid page refreshing
-     */
+      const connectResult = await connectAsync({ connector: new MetaMaskConnector() });
+      console.log('connectAsync', { connectResult })
+      const requestChallengeResult = await requestChallengeAsync({ address: connectResult.account, chainId: connectResult.chain.id }) as RequestChallengeAsyncResult;
+      console.log('requestChallengeAsync', { requestChallengeResult })
+      const signature = await signMessageAsync({ message: requestChallengeResult.message });
+      console.log('signMessageAsync', { signature })
 
-    const initialUser = {
-      // connectResult
-      "address": connectResult.account,
-      "chainId": connectResult.chain.id,
-      // signature
-      "signature": signature,
-      // requestChallengeResult
-      "metamaskId": requestChallengeResult.id,
-      "profileId": requestChallengeResult.profileId, // unique
-      "message": requestChallengeResult.message,
-      // static data
-      "first_name": "Anonymouse",
-      "last_name": "User",
-      "email_address": "",
-      "domain": "amazing.dapp",
-      "uri": process.env.NEXTAUTH_URL,
-      "version": "1",
-      "nonce": "PhHivceshQB8gekJi",
-    };
+      // redirect user after success authentication to '/user' page
+      const { url } = await signIn('moralis-auth', { message: requestChallengeResult.message, signature, redirect: false, callbackUrl: '/posts/self' }) as SignInResponse;
+      /**
+       * instead of using signIn(..., redirect: "/user")
+       * we get the url from callback and push it to the router to avoid page refreshing
+       */
 
-    await axiosInstance.patch(`/api/users/${initialUser.profileId}`, initialUser)
-    push(url);
+      const initialUser = {
+        // connectResult
+        "address": connectResult.account,
+        "chainId": connectResult.chain.id,
+        // signature
+        "signature": signature,
+        // requestChallengeResult
+        "metamaskId": requestChallengeResult.id,
+        "profileId": requestChallengeResult.profileId, // unique
+        "message": requestChallengeResult.message,
+        // static data
+        "first_name": "Anonymouse",
+        "last_name": "User",
+        "email_address": "",
+        "domain": "amazing.dapp",
+        "uri": process.env.NEXTAUTH_URL,
+        "version": "1",
+        "nonce": "PhHivceshQB8gekJi",
+      };
+
+      await axiosInstance.patch(`/api/users/${initialUser.profileId}`, initialUser)
+      if (url) {
+        push(url);
+      }
+    } catch (error) {
+      console.log('Signin Error', { error });
+    }
   };
 
   return (

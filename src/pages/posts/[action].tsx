@@ -1,12 +1,12 @@
 import React from "react";
 import Post from "../../components/Post";
 import { getSession } from 'next-auth/react';
+import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next";
-import dbConnect from "../../lib/dbConnect";
+import dbConnect from '../../utils/dbConnect';
 import PostColl from "../../models/post";
 import UserColl from "../../models/user";
-import { useRouter } from "next/router";
-import customSocket from "../../socket/client";
+import customSocket from "../../utils/socket/client";
 
 interface PostsProps {
   posts: any[];
@@ -17,21 +17,26 @@ interface PostsProps {
 function Posts({ posts: initialPosts = [], user = {}, loginUserId }: PostsProps) {
   const { query: { action }, } = useRouter();
 
-  const [posts, setProps] = React.useState(initialPosts);
+  const [posts, setPosts] = React.useState(initialPosts);
 
   React.useEffect(() => {
+    setPosts(initialPosts);
 
     customSocket().then((socket) => {
       socket.on('post-watch', ({ data: [data_1] }) => {
-        setProps(prev => {
-          const index = prev.findIndex((post) => post._id === data_1._id);
+        setPosts(prev => {
+          const index = initialPosts.findIndex((post) => post._id === data_1._id);
           if (index === -1) {
             return [data_1, ...posts]
           } else {
-            return posts.map((post, iPost) => index === iPost ? data_1 : post);
+            return initialPosts.map((post, iPost) => index === iPost ? data_1 : post);
           }
         });
       })
+
+      socket.on("client-send", (data) => {
+        console.log('client-send received', { data });
+      });
     })
 
     // Specify how to clean up after this effect:
@@ -42,8 +47,8 @@ function Posts({ posts: initialPosts = [], user = {}, loginUserId }: PostsProps)
         })
       })
     };
-
-  }, [action]);
+    // eslint-disable-next-line
+  }, [posts, loginUserId, action]);
 
   return (
     <React.Fragment>
@@ -85,8 +90,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     const { user } = session as any;
 
     if (action === 'self') {
-      let userPromise_1 = await UserColl.findOne({ profileId: user.profileId }).lean();
-      let postPromise_1 = await PostColl.find({ user: userPromise_1._id }).sort({ "createdAt": -1 }).populate("user").lean();
+      let userPromise_1 = await UserColl.findOne({ profileId: user.profileId }).lean() ?? {};
+      let postPromise_1 = await PostColl.find({ user: userPromise_1._id }).sort({ "createdAt": -1 }).populate("user").lean() ?? [];
 
       return {
         props: {
@@ -99,8 +104,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
     } else {
 
-      let userPromise = await UserColl.findOne({ profileId: user.profileId }).lean();
-      let postPromise = await PostColl.find({}).sort({ "createdAt": -1 }).populate("user").lean();
+      let userPromise = await UserColl.findOne({ profileId: user.profileId }).lean() ?? {};
+      let postPromise = await PostColl.find({}).sort({ "createdAt": -1 }).populate("user").lean() ?? [];
       return {
         props: {
           isLoggedIn: true,

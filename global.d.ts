@@ -1,10 +1,12 @@
 interface MongooseGlobal {
-  conn?: string;
+  conn?: string | null;
   promise?: Promise;
 }
 
-
 declare global {
+
+  var mongoose: MongooseGlobal;
+  
   namespace NodeJS {
     interface Global {
       mongoose: MongooseGlobal;

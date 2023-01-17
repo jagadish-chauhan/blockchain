@@ -1,8 +1,7 @@
 import React from "react";
 import { useForm, useFormState } from 'react-hook-form';
-import dbConnect from "../../lib/dbConnect";
+import dbConnect from "../../utils/dbConnect";
 import { getSession } from 'next-auth/react';
-import Post from "../../models/post";
 import User from "../../models/user";
 import { toast } from 'react-toastify';
 import { GetServerSidePropsContext } from "next";
@@ -41,7 +40,7 @@ function Profile({ user }: any) {
       setValue("last_name", user.last_name);
       setValue("email_address", user.email_address);
     }
-  }, [user]);
+  }, [user, setValue]);
 
   return (
     <React.Fragment>
@@ -93,7 +92,6 @@ function Profile({ user }: any) {
                   </label>
                   <input
                     type="text"
-                    name="first_name"
                     id="first_name"
                     autoComplete="first_name"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
@@ -108,7 +106,6 @@ function Profile({ user }: any) {
                   </label>
                   <input
                     type="text"
-                    name="last_name"
                     id="last_name"
                     autoComplete="last_name"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
@@ -123,7 +120,6 @@ function Profile({ user }: any) {
                   </label>
                   <input
                     type="email"
-                    name="email_address"
                     id="email_address"
                     autoComplete="email"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"

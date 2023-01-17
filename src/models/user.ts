@@ -1,24 +1,9 @@
+import { IPost, IUser } from '@/types/type';
 import { model, Schema, Model, Document, models } from 'mongoose';
-import { IPost } from './post';
 
-export interface IUser extends Document {
-  profileId: string;
-  address?: string;
-  chainId?: string;
-  domain?: string;
-  metamaskId?: string;
-  nonce?: string;
-  uri?: string;
-  version?: string;
-  aboutMe?: string;
-  posts?: IPost[];
-  email_address: string;
-  last_name: string;
-  first_name: string;
-  [x: string]: any;
-}
+type UserSchema = IUser & Document & { posts: IPost & Document };
 
-const userSchema = new Schema<IUser>({
+const userSchema = new Schema<UserSchema>({
   profileId: {
     required: true,
     type: String,
@@ -56,11 +41,7 @@ const userSchema = new Schema<IUser>({
   },
   first_name: {
     type: String
-  },
-  // posts: [{
-  //   ref: 'posts',
-  //   type: Schema.Types.ObjectId
-  // }],
+  }
 }, {
   timestamps: true,
   toJSON: { virtuals: true }, // So `res.json()` and other `JSON.stringify()` functions include virtuals
@@ -73,7 +54,6 @@ userSchema.virtual('posts', {
   foreignField: 'user',
 })
 
-let Users: Model<IUser> = models.users || model("users", userSchema);
-
+let Users: Model<UserSchema> = models.users || model("users", userSchema);
 
 export default Users;

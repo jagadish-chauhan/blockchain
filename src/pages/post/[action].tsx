@@ -3,12 +3,11 @@ import { useForm, useFormState } from 'react-hook-form';
 import { useRouter } from 'next/router'
 import axiosInstance from "../../utils/axiosInstance";
 import { getSession } from 'next-auth/react';
-import dbConnect from "../../lib/dbConnect";
+import dbConnect from '../../utils/dbConnect';
 import Post from "../../models/post";
 import User from "../../models/user";
 import { toast } from 'react-toastify';
 import { GetServerSidePropsContext } from "next";
-import customSocket from "../../socket/client";
 
 interface IPost {
   title: string;
@@ -27,18 +26,26 @@ function NewPost({ user, post }: any) {
   }
 
   const onSubmit = (data: IPost, e: any) => {
+    let promise = new Promise(resolve => setTimeout(resolve, 3000)), isNew = false;
     if (action === 'new') {
       data.user = user._id;
-      axiosInstance.post(`/api/post`, data).then(() => {
-        toast('Post has been created.');
-        push('/posts/self');
-      });
+      isNew = true;
+      promise = axiosInstance.post(`/api/post`, data);
     } else {
-      axiosInstance.patch(`/api/post/${action}`, data).then(() => {
-        toast('Post has been updated.');
-        push('/posts/self');
-      });
+      promise = axiosInstance.patch(`/api/post/${action}`, data);
     }
+    toast.promise(promise, {
+      pending: {
+        render: `Post is ${isNew ? "creating" : "updating"}...`
+      },
+      success: {
+        autoClose: 1000,
+        render: `Post has been ${isNew ? "created" : "updated"}...`
+      },
+      error: {
+        render: `Post is not ${isNew ? "created" : "updated"}...`
+      }
+    }).then(() => push('/posts/self'));
   };
 
   const onError = (errors: any, e: any) => {
@@ -50,6 +57,7 @@ function NewPost({ user, post }: any) {
       setValue("title", post.title);
       setValue("description", post.description);
     }
+    // eslint-disable-next-line
   }, [action]);
 
   return (
@@ -68,7 +76,6 @@ function NewPost({ user, post }: any) {
                   </label>
                   <input
                     type="text"
-                    name="title"
                     id="title"
                     // autoComplete="description"
                     placeholder="Title"
@@ -84,7 +91,6 @@ function NewPost({ user, post }: any) {
                   </label>
                   <textarea
                     id="description"
-                    name="description"
                     rows={3}
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     placeholder="Description"

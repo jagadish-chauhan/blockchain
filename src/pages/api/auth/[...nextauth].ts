@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth';
 import { MoralisNextAuthProvider } from '@moralisweb3/next';
-import dbConnect from '../../../lib/dbConnect';
+import dbConnect from '../../../utils/dbConnect';
 export default NextAuth({
   providers: [MoralisNextAuthProvider()],
   // adding user info to the user session object

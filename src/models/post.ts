@@ -1,14 +1,9 @@
-import { model, Schema, Model, Document, models } from 'mongoose';
-import { IUser } from './user';
+import { IPost, IUser } from '@/types/type';
+import { model, Schema, Model, Document, models, PopulatedDoc, ObjectId } from 'mongoose';
 
-export interface IPost extends Document {
-  title: string;
-  description: string;
-  user: IUser;
-  [x: string]: any;
-}
+type PostSchema = IPost & { user: PopulatedDoc<Document<ObjectId> & IUser> };
 
-const postSchema = new Schema<IPost>({
+const postSchema = new Schema<PostSchema>({
   title: {
     type: String,
   },
@@ -20,10 +15,9 @@ const postSchema = new Schema<IPost>({
     type: Schema.Types.ObjectId
   }
 }, {
-  timestamps: true,
-  // strict: false
+  timestamps: true
 });
 
-let Posts: Model<IPost> = models.posts || model("posts", postSchema);
+let Posts: Model<PostSchema> = models.posts || model("posts", postSchema);
 
 export default Posts;

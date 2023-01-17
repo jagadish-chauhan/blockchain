@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import dbConnect from '../../../lib/dbConnect';
+import dbConnect from '../../../utils/dbConnect';
 import User from '../../../models/user';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
