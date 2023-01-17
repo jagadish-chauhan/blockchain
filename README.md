@@ -18,8 +18,7 @@
 
 ## Pre - Requirements
 
-- NodeJS v16.19.0
-
+- NodeJS v18.12.1
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
