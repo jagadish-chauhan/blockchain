@@ -7,7 +7,7 @@ const socketInitialization = async () => await axiosInstance
   .get('/api/socket')
   .then(() => {
     if (!socket) {
-      socket = io(process.env.NEXTAUTH_URL);
+      socket = io(process.env.NEXTAUTH_URL_WS);
       socket.on('connect', () => {
         socket.emit('hello');
       })

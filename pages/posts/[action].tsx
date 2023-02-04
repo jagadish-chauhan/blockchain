@@ -20,6 +20,10 @@ function Posts({ posts: initialPosts = [], user = {}, loginUserId }: PostsProps)
   const [posts, setProps] = React.useState(initialPosts);
 
   React.useEffect(() => {
+    setProps(initialPosts);
+  }, [initialPosts])
+
+  React.useEffect(() => {
 
     customSocket().then((socket) => {
       socket.on('post-watch', ({ data: [data_1] }) => {
@@ -45,6 +49,7 @@ function Posts({ posts: initialPosts = [], user = {}, loginUserId }: PostsProps)
 
   }, [action]);
 
+  console.log("Posts :: ", { loginUserId, action, initialPosts, user });
   return (
     <React.Fragment>
       <div className="flex flex-col items-center py-20 bg-gray-100  sm:justify-center sm:pt-0">
