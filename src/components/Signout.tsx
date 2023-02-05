@@ -71,7 +71,7 @@ function NoLogin() {
       if (url) {
         push(url);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log('Loign error', { error });
       switch (error.name) {
         case "ConnectorNotFoundError": {

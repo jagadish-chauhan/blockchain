@@ -9,10 +9,10 @@ export const ReactPortal = (props: ReactPortalProps) => {
   const el = useRef(document.createElement('div'));
   useEffect(() => {
     const portal = document.getElementById('portal');
-    portal.appendChild(el.current);
+    portal?.appendChild(el.current);
 
     return () => {
-      portal.removeChild(el.current);
+      portal?.removeChild(el.current);
     };
 
   }, [props.children]);
