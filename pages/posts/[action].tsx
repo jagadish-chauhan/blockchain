@@ -6,15 +6,18 @@ import dbConnect from "../../lib/dbConnect";
 import PostColl from "../../models/post";
 import UserColl from "../../models/user";
 import { useRouter } from "next/router";
-import customSocket from "../../socket/client";
+import { Socket } from "socket.io-client";
+// import customSocket from "../../socket/client";
 
 interface PostsProps {
   posts: any[];
   user: any;
   loginUserId?: string;
+  clientSocket: Socket;
+  [x: string]: any;
 }
 
-function Posts({ posts: initialPosts = [], user = {}, loginUserId }: PostsProps) {
+function Posts({ posts: initialPosts = [], user = {}, loginUserId, clientSocket }: PostsProps) {
   const { query: { action }, } = useRouter();
 
   const [posts, setProps] = React.useState(initialPosts);
@@ -24,11 +27,14 @@ function Posts({ posts: initialPosts = [], user = {}, loginUserId }: PostsProps)
   }, [initialPosts])
 
   React.useEffect(() => {
-
-    customSocket().then((socket) => {
-      socket.on('post-watch', ({ data: [data_1] }) => {
+    if (clientSocket) {
+      clientSocket.on('post-watch', (postWatch) => {
+        console.log("clientSocket post-watch", { postWatch });
+        const { data: data_1 } = postWatch;
         setProps(prev => {
+          console.log('setProps', { data_1 });
           const index = prev.findIndex((post) => post._id === data_1._id);
+          console.log('setProps', { prev, index });
           if (index === -1) {
             return [data_1, ...posts]
           } else {
@@ -36,18 +42,8 @@ function Posts({ posts: initialPosts = [], user = {}, loginUserId }: PostsProps)
           }
         });
       })
-    })
-
-    // Specify how to clean up after this effect:
-    return function cleanup() {
-      customSocket().then((socket) => {
-        socket.on('disconnect', () => {
-          // console.log('socket disconnect');
-        })
-      })
-    };
-
-  }, [action]);
+    }
+  }, [clientSocket]);
 
   console.log("Posts :: ", { loginUserId, action, initialPosts, user });
   return (

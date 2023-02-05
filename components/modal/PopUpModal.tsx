@@ -64,7 +64,7 @@ function PopUpModal({ open, setOpen }: { open: boolean, setOpen(x: boolean): any
                       href='https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn'
                       target="_blank"
                     >
-                      Got it, thanks!
+                      Install Extension
                     </Link>
                   </p>
                 </div>

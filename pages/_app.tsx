@@ -28,7 +28,7 @@ function MyApp({ Component, pageProps }) {
 
     const socket = SocketIOClient(process.env.NEXT_PUBLIC_NEXTAUTH_URL_WS, {
       path: "/api/socketio",
-      transports: ["websocket"]
+      // transports: ["websocket"]
     })
 
     // log socket connection
@@ -37,16 +37,11 @@ function MyApp({ Component, pageProps }) {
       setClientSocket(socket);
       // setConnected(true);
     });
-    console.log('socket initalization in app', {
-      env: process.env,
-      NEXT_PUBLIC_NEXTAUTH_URL_WS: process.env.NEXT_PUBLIC_NEXTAUTH_URL_WS,
-      REACT_APP_API_URL: process.env.REACT_APP_API_URL
-    });
 
     // component did unmount
     return () => {
       // socket disconnet onUnmount if exists
-      socket.disconnect();
+      // socket.disconnect();
     }
   }, []);
 

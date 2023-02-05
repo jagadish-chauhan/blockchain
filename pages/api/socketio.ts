@@ -17,20 +17,21 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseServerIO) => {
     // append SocketIO server to Next.js socket server response
     res.socket.server.io = io;
 
-    // io.on('connection', socket => {
-    //   Post.watch([], { fullDocument: 'updateLookup' }).on('change', (data: any) => {
-    //     console.log('socket post change', data);
-    //     Post.find({ _id: data.fullDocument._id }).populate('user').lean().then((post) => {
-    //       socket.broadcast.emit('post-watch', { data: JSON.parse(JSON.stringify(post)) });
-    //     })
-    //   })
-    // })
-    // res.socket.server.io = io
+    io.on('connection', socket => {
+      console.log('socket connection istablished', socket.id);
+      res.socket.server.socket = socket;
+      // Post.watch([], { fullDocument: 'updateLookup' }).on('change', (data: any) => {
+      //   console.log('socket post change', data);
+      //   Post.find({ _id: data.fullDocument._id }).populate('user').lean().then((post) => {
+      //     socket.broadcast.emit('post-watch', { data: JSON.parse(JSON.stringify(post)) });
+      //   })
+      // })
+      res.end();
+    })
 
   } else {
     console.log('socket.io already running')
   }
-  res.end()
 }
 
 export const config = {
