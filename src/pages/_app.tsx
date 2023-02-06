@@ -26,10 +26,10 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [clientSocket, setClientSocket] = useState<Socket>();
 
   React.useEffect(() => {
-    const use = async () => {
-      (await import('tw-elements'));
-    };
-    use();
+    // const use = async () => {
+    //   (await import('tw-elements'));
+    // };
+    // use();
 
     const socket = SocketIOClient(process.env.NEXT_PUBLIC_NEXTAUTH_URL_WS, {
       path: "/api/socketio",

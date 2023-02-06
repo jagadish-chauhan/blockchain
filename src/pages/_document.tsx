@@ -10,6 +10,7 @@ export default function Document() {
         <Main />
         <ReactPortalDiv />
         <NextScript />
+        <script src="./TW-ELEMENTS-PATH/dist/js/index.min.js"></script>
       </body>
     </Html>
   )
