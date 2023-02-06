@@ -2,6 +2,7 @@
   "name": "nextjs_moralis_auth",
   "version": "1.0.0",
   "main": "index.js",
+  "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -15,6 +16,7 @@
     "@moralisweb3/next": "^2.12.0",
     "@tailwindcss/forms": "^0.5.3",
     "axios": "^1.2.2",
+    "ethers": "^5.7.2",
     "ganache": "^7.7.4",
     "moment-timezone": "^0.5.40",
     "mongoose": "^6.8.3",
@@ -28,10 +30,11 @@
     "socket.io": "^4.5.4",
     "socket.io-client": "^4.5.4",
     "tw-elements": "^1.0.0-alpha13",
-    "wagmi": "0.6.1"
+    "wagmi": "^0.11.4"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.9",
+    "@types/lodash": "^4.14.191",
     "@types/react": "18.0.25",
     "@types/react-dom": "^18.0.10",
     "autoprefixer": "^10.4.13",

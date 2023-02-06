@@ -1,7 +1,7 @@
 import 'react-toastify/dist/ReactToastify.css';
 import '@/styles/globals.css'
 import React, { useState } from 'react';
-import { createClient, configureChains, WagmiConfig, defaultChains } from 'wagmi';
+import { createClient, configureChains, WagmiConfig } from 'wagmi';
 import SocketIOClient, { Socket } from "socket.io-client";
 import { ToastContainer, toast } from 'react-toastify';
 import { publicProvider } from 'wagmi/providers/public';
@@ -11,7 +11,7 @@ import { SessionProvider } from 'next-auth/react';
 import Header from '../components/Header';
 import * as chains from 'wagmi/chains';
 
-// const defaultChains = Object.values(chains);
+const defaultChains = Object.values(chains);
 console.log("defaultChains", { defaultChains, chains });
 const { provider, webSocketProvider } = configureChains(defaultChains, [publicProvider()]);
 
