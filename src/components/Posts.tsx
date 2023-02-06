@@ -1,7 +1,6 @@
 import React from "react";
 import Post from "./Post";
 
-
 interface PostsProps {
   posts: any[];
 }

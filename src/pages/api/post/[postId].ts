@@ -1,10 +1,10 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest } from 'next';
 import dbConnect from '../../../utils/dbConnect';
+import _has from 'lodash/has';
 import Post from '../../../models/post';
-import { Server } from 'socket.io'
-import { NextApiResponseWithSocket } from '@/types/type';
+import { NextApiResponseServerIO } from '../../../types/next';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponseWithSocket) {
+export default async function handler(req: NextApiRequest, res: NextApiResponseServerIO) {
   const { method, query } = req;
 
   console.log('postId handler : ', { method, query, body: req.body });
@@ -15,20 +15,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponseW
     case 'GET':
       try {
         const post = await Post.findOne({ _id: postId });
-        res.status(200).json({ success: true, data: post })
+        res.status(200).json({ success: true, data: post });
       } catch (error) {
         res.status(400).json({ success: false })
       }
       break
     case 'PATCH':
       try {
-        const post = await Post.updateOne({ _id: postId }, req.body, { upsert: true });
-        console.log("post has been updated");
-        if (res.clientSocket) {
-          console.log("post has been emited");
-          res.clientSocket.broadcast.emit("client-send", post);
+        const post: any = await Post.findByIdAndUpdate({ _id: postId }, req.body, { upsert: true }).populate('user').lean();
+        let error: any = "";
+        Object.assign(post, req.body);
+        try {
+          res.socket.server.socket.broadcast.emit('post-watch', { data: JSON.parse(JSON.stringify(post)) });
+        } catch (socketError) {
+          error = socketError;
         }
-        res.status(200).json({ success: true, data: post })
+        res.status(200).json({ success: true, data: post, error })
       } catch (error) {
         res.status(400).json({ success: false })
       }

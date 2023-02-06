@@ -6,50 +6,46 @@ import { GetServerSidePropsContext } from "next";
 import dbConnect from '../../utils/dbConnect';
 import PostColl from "../../models/post";
 import UserColl from "../../models/user";
-import customSocket from "../../utils/socket/client";
+import { Socket } from "socket.io-client";
+// import customSocket from "../../socket/client";
 
 interface PostsProps {
   posts: any[];
   user: any;
   loginUserId?: string;
+  clientSocket: Socket;
+  [x: string]: any;
 }
 
-function Posts({ posts: initialPosts = [], user = {}, loginUserId }: PostsProps) {
+function Posts({ posts: initialPosts = [], user = {}, loginUserId, clientSocket }: PostsProps) {
   const { query: { action }, } = useRouter();
 
   const [posts, setPosts] = React.useState(initialPosts);
 
   React.useEffect(() => {
     setPosts(initialPosts);
+  }, [initialPosts])
 
-    customSocket().then((socket) => {
-      socket.on('post-watch', ({ data: [data_1] }) => {
+  React.useEffect(() => {
+    if (clientSocket) {
+      clientSocket.on('post-watch', (postWatch) => {
+        console.log("clientSocket post-watch", { postWatch });
         setPosts(prev => {
-          const index = initialPosts.findIndex((post) => post._id === data_1._id);
+          const { data: data_1 } = postWatch;
+          const index = prev.findIndex((post) => post._id === data_1._id);
+          console.log('setProps', { data_1, index });
           if (index === -1) {
             return [data_1, ...posts]
           } else {
-            return initialPosts.map((post, iPost) => index === iPost ? data_1 : post);
+            return prev.map((post, iPost) => index === iPost ? data_1 : post);
           }
         });
-      })
 
-      socket.on("client-send", (data) => {
-        console.log('client-send received', { data });
       });
-    })
+    }
+  }, [clientSocket]);
 
-    // Specify how to clean up after this effect:
-    return function cleanup() {
-      customSocket().then((socket) => {
-        socket.on('disconnect', () => {
-          // console.log('socket disconnect');
-        })
-      })
-    };
-    // eslint-disable-next-line
-  }, [posts, loginUserId, action]);
-
+  console.log("Posts :: ", { loginUserId, action, initialPosts, user });
   return (
     <React.Fragment>
       <div className="flex flex-col items-center py-20 bg-gray-100  sm:justify-center sm:pt-0">

@@ -52,7 +52,7 @@ function Header({ isLoggedIn, user = {} }: any) {
   let username = user.first_name + " " + user.last_name;
 
   return (
-    <nav className="bg-white px-2 sm:px-4 py-2.5 dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
+    <nav className="bg-white px-2 sm:px-4 py-2.5 dark:bg-gray-900 fixed w-full top-0 left-0 border-b border-gray-200 dark:border-gray-600">
       <div className="container flex flex-wrap items-center justify-between mx-auto">
         <a href="https://flowbite.com/" className="flex items-center">
           <Image loader={() => "https://flowbite.com/docs/images/logo.svg"} src="https://flowbite.com/docs/images/logo.svg" width={24} height={24} className="h-6 mr-3 sm:h-9" alt="Flowbite Logo" />
