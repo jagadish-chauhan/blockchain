@@ -10,6 +10,7 @@ import type { AppProps } from 'next/app'
 import { SessionProvider } from 'next-auth/react';
 import Header from '../components/Header';
 import * as chains from 'wagmi/chains';
+import _get from 'lodash/get';
 
 const defaultChains = Object.values(chains);
 console.log("defaultChains", { defaultChains, chains });
@@ -31,7 +32,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     // };
     // use();
 
-    const socket = SocketIOClient(process.env.NEXT_PUBLIC_NEXTAUTH_URL_WS, {
+
+    const socket = SocketIOClient(_get(process, 'env.NEXT_PUBLIC_NEXTAUTH_URL_WS', ''), {
       path: "/api/socketio",
       // transports: ["websocket"]
     })
