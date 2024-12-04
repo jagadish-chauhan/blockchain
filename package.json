@@ -15,7 +15,7 @@
     "@heroicons/react": "^2.0.13",
     "@moralisweb3/next": "^2.12.0",
     "@tailwindcss/forms": "^0.5.3",
-    "axios": "^1.2.2",
+    "axios": "^1.7.8",
     "ethers": "^5.7.2",
     "ganache": "^7.7.4",
     "moment-timezone": "^0.5.40",
@@ -30,7 +30,7 @@
     "socket.io": "^4.5.4",
     "socket.io-client": "^4.5.4",
     "tw-elements": "^1.0.0-alpha13",
-    "wagmi": "^0.11.4"
+    "wagmi": "^2.13.3"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.9",
