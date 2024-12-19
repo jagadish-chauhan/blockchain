@@ -19,7 +19,7 @@
     "ethers": "^5.7.2",
     "ganache": "^7.7.4",
     "moment-timezone": "^0.5.40",
-    "mongoose": "^6.8.3",
+    "mongoose": "^6.13.5",
     "moralis": "^2.12.0",
     "next": "^13.0.5",
     "next-auth": "^4.19.2",
